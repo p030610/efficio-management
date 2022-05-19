@@ -6,8 +6,6 @@ from PyQt6.QtCore import *
 import pymysql
 import time
 
-from sqlalchemy import false
-
 from ui.company_detail import Company_detail
 from ui.company_list import Company_list
 from ui.complete import Complete
@@ -67,9 +65,6 @@ class Stacks():
         self.loginpage.show()
 
     def login(self, child, id, pw):
-
-        print(id)
-        print(pw)
 
         self.read_users()
         time.sleep(0.5)
@@ -141,7 +136,7 @@ class Stacks():
 
         self.connection = pymysql.connect(host='localhost',
                              user='root',
-                             password='COLTm1911a1@',
+                             password='',
                              database='efficio_manage',
                              cursorclass=pymysql.cursors.DictCursor)
 
@@ -191,18 +186,19 @@ class Stacks():
         self.close_all_windows()
         self.connection = pymysql.connect(host='localhost',
                              user='root',
-                             password='COLTm1911a1@',
+                             password='',
                              database='efficio_manage',
                              cursorclass=pymysql.cursors.DictCursor)
 
         cursors = self.connection.cursor()
 
-        sql = "insert into users (name, phone, username, password, position, level, authority) values ('" + self.registerpage.line_name.text() + "','" + self.registerpage.line_phone.text() +   "','" + self.registerpage.line_id.text() + "','" + self.registerpage.line_pw.text() + "','" + self.registerpage.line_position.text() + "','" + self.registerpage.line_level.text() + "', 1);"
+        print(self.registerpage.line_name.text())
+
+        sql = "insert into users (name, phone, username, password, position, level, authority) values ('" + self.registerpage.line_name.text() + "','" + self.registerpage.line_phone.text() +   "','" + self.registerpage.line_id.text() + "','" + self.registerpage.line_pw.text() + "','" + self.registerpage.line_position.text() + "','" + self.registerpage.line_level.text() + "', '1');"
         cursors.execute(sql)
 
-        self.data = cursors.fetchall()
+        self.connection.commit()
 
-        self.connection.close()
 
         QMessageBox.information(self.registerpage,'알림 ','성공적으로 회원가입 되었습니다')
 
@@ -210,10 +206,13 @@ class Stacks():
 
         self.loginpage.show()
 
+        self.connection.close()
+
+
     def inspect_id(self) : 
         self.connection = pymysql.connect(host='localhost',
                              user='root',
-                             password='COLTm1911a1@',
+                             password='',
                              database='efficio_manage',
                              cursorclass=pymysql.cursors.DictCursor)
 
