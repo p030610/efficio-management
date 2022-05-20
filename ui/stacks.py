@@ -96,8 +96,11 @@ class Stacks():
             self.new_step4_2.label_info.setText(id + ":" + username)
             self.mainwindow.show()
             QMessageBox.information(child,'알림 ','성공적으로 로그인 되었습니다')
+
+            self.refresh_mainwindow_tables()
         else : 
             QMessageBox.warning(child,'알림 ','계정정보가 존재하지 않습니다')
+            
 
     def register(self) :
         self.close_all_windows()
@@ -110,6 +113,7 @@ class Stacks():
     def find_pw(self):
         self.close_all_windows()
         self.find_pw.show()
+        self.refresh_mainwindow_tables()
 
     def goto_home(self):
         self.close_all_windows()
@@ -234,3 +238,273 @@ class Stacks():
             else : 
                 self.registerpage.id_is_unique = True
                 QMessageBox.warning(self.registerpage,'알림','유효한 아이디입니다')
+
+    def get_table_company_list(self) : 
+
+        self.connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='',
+                             database='efficio_manage',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        cursors = self.connection.cursor()
+
+        sql = "select * from company order by name desc"
+
+        cursors.execute(sql)
+
+        self.data = cursors.fetchall()
+
+        self.connection.close()
+
+        self.mainwindow.table_company_list.setColumnCount(6)
+
+        self.mainwindow.table_company_list.setRowCount(len(self.data))
+
+        index = 0
+
+        for i in self.data : 
+            self.mainwindow.table_company_list.setItem(index, 0, QTableWidgetItem(str(i["name"])))
+            self.mainwindow.table_company_list.setItem(index, 1, QTableWidgetItem(str(i["represent"])))
+            self.mainwindow.table_company_list.setItem(index, 2, QTableWidgetItem(str(i["phone"])))
+            self.mainwindow.table_company_list.setItem(index, 3, QTableWidgetItem(str(i["left_money"])))
+            self.mainwindow.table_company_list.setItem(index, 4, QTableWidgetItem(str(i["memo"])))
+            self.mainwindow.table_company_list.setItem(index, 5, QTableWidgetItem(str(i["id"])))
+            index += 1
+
+    def get_table_deadline_align(self) : 
+
+        self.connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='',
+                             database='efficio_manage',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        cursors = self.connection.cursor()
+
+        sql = "select * from company order by deadline_date desc"
+
+        cursors.execute(sql)
+
+        self.data = cursors.fetchall()
+
+        self.connection.close()
+
+        self.mainwindow.table_deadline_align.setColumnCount(6)
+
+        self.mainwindow.table_deadline_align.setRowCount(len(self.data))
+
+        index = 0
+
+        for i in self.data : 
+            self.mainwindow.table_deadline_align.setItem(index, 0, QTableWidgetItem(str(i["deadline_date"])))
+            self.mainwindow.table_deadline_align.setItem(index, 1, QTableWidgetItem(str(i["name"])))
+            self.mainwindow.table_deadline_align.setItem(index, 2, QTableWidgetItem(str(i["service_name"])))
+            self.mainwindow.table_deadline_align.setItem(index, 3, QTableWidgetItem(str(i["stock_left"])))
+            self.mainwindow.table_deadline_align.setItem(index, 4, QTableWidgetItem(str(i["entire_stock"])))
+            self.mainwindow.table_deadline_align.setItem(index, 5, QTableWidgetItem(str(i["id"])))
+            index += 1
+
+    def get_table_estimate_align(self) : 
+
+        self.connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='',
+                             database='efficio_manage',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        cursors = self.connection.cursor()
+
+        sql = "select * from company order by estimate_publish_date desc"
+
+        cursors.execute(sql)
+
+        self.data = cursors.fetchall()
+
+        self.connection.close()
+
+        self.mainwindow.table_estimate_align.setColumnCount(6)
+
+        self.mainwindow.table_estimate_align.setRowCount(len(self.data))
+
+        index = 0
+
+        for i in self.data : 
+            self.mainwindow.table_estimate_align.setItem(index, 0, QTableWidgetItem(str(i["deadline_date"])))
+            self.mainwindow.table_estimate_align.setItem(index, 1, QTableWidgetItem(str(i["name"])))
+            self.mainwindow.table_estimate_align.setItem(index, 2, QTableWidgetItem(str(i["represent"])))
+            self.mainwindow.table_estimate_align.setItem(index, 3, QTableWidgetItem(str(i["stock_left"])))
+            self.mainwindow.table_estimate_align.setItem(index, 4, QTableWidgetItem(str(i["entire_stock"])))
+            self.mainwindow.table_estimate_align.setItem(index, 5, QTableWidgetItem(str(i["id"])))
+            index += 1
+
+    def mainwindow_search_1(self) : 
+
+        self.connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='',
+                             database='efficio_manage',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        cursors = self.connection.cursor()
+
+        sql = "select * from company where name = '" + self.mainwindow.line_search_1.text() + "' order by name desc"
+
+        cursors.execute(sql)
+
+        self.data = cursors.fetchall()
+
+        self.connection.close()
+
+        self.mainwindow.table_company_list.setRowCount(len(self.data))
+
+        index = 0
+
+        for i in self.data : 
+            self.mainwindow.table_company_list.setItem(index, 0, QTableWidgetItem(str(i["name"])))
+            self.mainwindow.table_company_list.setItem(index, 1, QTableWidgetItem(str(i["represent"])))
+            self.mainwindow.table_company_list.setItem(index, 2, QTableWidgetItem(str(i["phone"])))
+            self.mainwindow.table_company_list.setItem(index, 3, QTableWidgetItem(str(i["left_money"])))
+            self.mainwindow.table_company_list.setItem(index, 4, QTableWidgetItem(str(i["memo"])))
+            self.mainwindow.table_company_list.setItem(index, 5, QTableWidgetItem(str(i["id"])))
+            index += 1
+
+    def mainwindow_search_2(self) : 
+
+        self.connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='',
+                             database='efficio_manage',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        cursors = self.connection.cursor()
+
+        sql = "select * from company where name = '" + self.mainwindow.line_search_2.text() + "' order by deadline_date desc"
+
+        cursors.execute(sql)
+
+        self.data = cursors.fetchall()
+
+        self.connection.close()
+
+        self.mainwindow.table_deadline_align.setRowCount(len(self.data))
+
+        index = 0
+
+        for i in self.data : 
+            self.mainwindow.table_deadline_align.setItem(index, 0, QTableWidgetItem(str(i["deadline_date"])))
+            self.mainwindow.table_deadline_align.setItem(index, 1, QTableWidgetItem(str(i["name"])))
+            self.mainwindow.table_deadline_align.setItem(index, 2, QTableWidgetItem(str(i["service_name"])))
+            self.mainwindow.table_deadline_align.setItem(index, 3, QTableWidgetItem(str(i["stock_left"])))
+            self.mainwindow.table_deadline_align.setItem(index, 4, QTableWidgetItem(str(i["entire_stock"])))
+            self.mainwindow.table_deadline_align.setItem(index, 5, QTableWidgetItem(str(i["id"])))
+            index += 1
+
+    def mainwindow_search_3(self) : 
+
+        self.connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='',
+                             database='efficio_manage',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        cursors = self.connection.cursor()
+
+        sql = "select * from company where name = '" + self.mainwindow.line_search_3.text() + "' order by estimate_publish_date desc"
+
+        cursors.execute(sql)
+
+        self.data = cursors.fetchall()
+
+        self.connection.close()
+
+        self.mainwindow.table_estimate_align.setRowCount(len(self.data))
+
+        index = 0
+
+        for i in self.data : 
+            self.mainwindow.table_estimate_align.setItem(index, 0, QTableWidgetItem(str(i["deadline_date"])))
+            self.mainwindow.table_estimate_align.setItem(index, 1, QTableWidgetItem(str(i["name"])))
+            self.mainwindow.table_estimate_align.setItem(index, 2, QTableWidgetItem(str(i["represent"])))
+            self.mainwindow.table_estimate_align.setItem(index, 3, QTableWidgetItem(str(i["stock_left"])))
+            self.mainwindow.table_estimate_align.setItem(index, 4, QTableWidgetItem(str(i["entire_stock"])))
+            self.mainwindow.table_deadline_align.setItem(index, 5, QTableWidgetItem(str(i["id"])))
+            index += 1
+
+    def refresh_mainwindow_tables(self) : 
+        self.get_table_company_list()
+        self.get_table_estimate_align()
+        self.get_table_deadline_align()
+
+    def mainwindow_table_1_clicked(self) : 
+        row = self.mainwindow.table_company_list.currentRow()
+
+        self.open_company_detail_page(self.mainwindow.table_company_list.item(row, 5).text())
+
+    def mainwindow_table_2_clicked(self) : 
+        row = self.mainwindow.table_deadline_align.currentRow()
+
+        self.open_company_detail_page(self.mainwindow.table_deadline_align.item(row, 5).text())
+
+    def mainwindow_table_3_clicked(self) : 
+        row = self.mainwindow.table_estimate_align.currentRow()
+
+        self.open_company_detail_page(self.mainwindow.table_estimate_align.item(row, 5).text())
+
+
+    def open_company_detail_page(self, id) : 
+
+        self.close_all_windows()
+
+        self.company_detail.show()
+
+        self.connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='',
+                             database='efficio_manage',
+                             cursorclass=pymysql.cursors.DictCursor)
+
+        cursors = self.connection.cursor()
+
+        sql = "select * from company where id = '" + id + "'"
+
+        sql_service = "select * from services where company_id = '" + id + "'"
+
+        cursors.execute(sql)
+
+        self.data = cursors.fetchall()
+
+        cursors.execute(sql_service)
+
+        self.data_service = cursors.fetchall()
+
+        self.connection.close()
+
+        self.company_detail.line_edit_content_down_1_1.setText(str(self.data[0]["name"]))
+        self.company_detail.line_edit_content_down_1_2.setText(str(self.data[0]["represent"]))
+        self.company_detail.line_edit_content_down_1_3.setText(str(self.data[0]["phone"]))
+        self.company_detail.line_edit_content_down_1_4.setText(str(self.data[0]["damdangja"]))
+        self.company_detail.line_edit_content_down_1_5.setText(str(self.data[0]["damdangja_phone"]))
+        self.company_detail.line_edit_content_down_2_1.setText(str(self.data[0]["advance_money"]))
+        self.company_detail.line_edit_content_down_2_2.setText(str(self.data[0]["left_money"]))
+        self.company_detail.line_edit_content_down_2_3.setText(str(self.data[0]["deadline_date"]))
+        self.company_detail.line_edit_content_down_2_4.setText(str(self.data[0]["memo"]))
+
+        self.company_detail.table.setColumnCount(10)
+        self.company_detail.table.setRowCount(len(self.data_service))
+
+        index = 0
+
+        for i in self.data_service : 
+            self.company_detail.table.setItem(index, 0, QTableWidgetItem(str(i["name"])))
+            self.company_detail.table.setItem(index, 1, QTableWidgetItem(str(i["guide_send"])))
+            self.company_detail.table.setItem(index, 2, QTableWidgetItem(str(i["guide_receive"])))
+            self.company_detail.table.setItem(index, 3, QTableWidgetItem(str(i["work_commit_date"])))
+            self.company_detail.table.setItem(index, 4, QTableWidgetItem(str(i["left_works"])))
+            self.company_detail.table.setItem(index, 5, QTableWidgetItem(str(i["did_works"])))
+            self.company_detail.table.setItem(index, 6, QTableWidgetItem(str(i["interim_report"])))
+            self.company_detail.table.setItem(index, 7, QTableWidgetItem(str(i["deadline"])))
+            self.company_detail.table.setItem(index, 8, QTableWidgetItem(str(i["complete_report"])))
+            self.company_detail.table.setItem(index, 9, QTableWidgetItem('-'))
+            index += 1
+

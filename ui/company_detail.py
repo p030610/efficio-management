@@ -29,7 +29,7 @@ class Company_detail(QWidget):
 
         label_table = QLabel("서비스 내역")
 
-        table = QTableWidget()
+        self.table = QTableWidget()
 
         
         button_efficio = QPushButton("에피치오 홈")
@@ -63,11 +63,11 @@ class Company_detail(QWidget):
         label_content_down_1_5 = QLabel("(담당자)연락처")
         label_content_down_1_6 = QLabel("사업자등록증")
 
-        line_edit_content_down_1_1 = QLineEdit()
-        line_edit_content_down_1_2 = QLineEdit()
-        line_edit_content_down_1_3 = QLineEdit()
-        line_edit_content_down_1_4 = QLineEdit()
-        line_edit_content_down_1_5 = QLineEdit()
+        self.line_edit_content_down_1_1 = QLineEdit()
+        self.line_edit_content_down_1_2 = QLineEdit()
+        self.line_edit_content_down_1_3 = QLineEdit()
+        self.line_edit_content_down_1_4 = QLineEdit()
+        self.line_edit_content_down_1_5 = QLineEdit()
 
         button_content_down_1_1 = QPushButton("보기")
         button_content_down_1_2 = QPushButton("파일 업로드")
@@ -79,17 +79,17 @@ class Company_detail(QWidget):
         label_content_down_2_4 = QLabel("특이사항")
         label_content_down_2_5 = QLabel("소상공인확인서")
 
-        line_edit_content_down_2_1 = QLineEdit()
-        line_edit_content_down_2_2 = QLineEdit()
-        line_edit_content_down_2_3 = QLineEdit()
-        line_edit_content_down_2_4 = QLineEdit()
+        self.line_edit_content_down_2_1 = QLineEdit()
+        self.line_edit_content_down_2_2 = QLineEdit()
+        self.line_edit_content_down_2_3 = QLineEdit()
+        self.line_edit_content_down_2_4 = QLineEdit()
 
         button_content_down_2_1 = QPushButton("보기")
         button_content_down_2_2 = QPushButton("파일 업로드")
         button_content_down_2_3 = QPushButton("파일 다운로드")
 
         table_layout.addWidget(label_table)
-        table_layout.addWidget(table)
+        table_layout.addWidget(self.table)
 
         dock_right.addWidget(self.label_info)
         dock_right.addWidget(self.label_datetime)
@@ -121,14 +121,15 @@ class Company_detail(QWidget):
         self.content_down.addLayout(table_layout)
 
         content_down_1.addWidget(label_content_down_1_1)
-        content_down_1.addWidget(line_edit_content_down_1_1)
+        content_down_1.addWidget(self.line_edit_content_down_1_1)#기업명
         content_down_1.addWidget(label_content_down_1_2)
-        content_down_1.addWidget(line_edit_content_down_1_2)
+        content_down_1.addWidget(self.line_edit_content_down_1_2)#대표자명
         content_down_1.addWidget(label_content_down_1_3)
-        content_down_1.addWidget(line_edit_content_down_1_3)
+        content_down_1.addWidget(self.line_edit_content_down_1_3)#연락처
         content_down_1.addWidget(label_content_down_1_4)
-        content_down_1.addWidget(line_edit_content_down_1_4)
+        content_down_1.addWidget(self.line_edit_content_down_1_4)#담당자명
         content_down_1.addWidget(label_content_down_1_5)
+        content_down_1.addWidget(self.line_edit_content_down_1_5)#담당자 연락처
         content_down_1.addLayout(content_down_1_sublayout)#사업자등록증(보기)
         content_down_1_sublayout.addWidget(label_content_down_1_6)
         content_down_1_sublayout.addWidget(button_content_down_1_1)
@@ -136,13 +137,13 @@ class Company_detail(QWidget):
         content_down_1.addWidget(button_content_down_1_3)
 
         content_down_2.addWidget(label_content_down_2_1)#선금
-        content_down_2.addWidget(line_edit_content_down_2_1)
+        content_down_2.addWidget(self.line_edit_content_down_2_1)
         content_down_2.addWidget(label_content_down_2_2)#잔금
-        content_down_2.addWidget(line_edit_content_down_2_2)
+        content_down_2.addWidget(self.line_edit_content_down_2_2)
         content_down_2.addWidget(label_content_down_2_3)#마감 예정일
-        content_down_2.addWidget(line_edit_content_down_2_3)
+        content_down_2.addWidget(self.line_edit_content_down_2_3)
         content_down_2.addWidget(label_content_down_2_4)#특이사항
-        content_down_2.addWidget(line_edit_content_down_2_4)
+        content_down_2.addWidget(self.line_edit_content_down_2_4)
         content_down_2.addLayout(content_down_2_sublayout)#소상공인확인서(보기)
         content_down_2_sublayout.addWidget(label_content_down_2_5)
         content_down_2_sublayout.addWidget(button_content_down_2_1)
@@ -150,4 +151,3 @@ class Company_detail(QWidget):
         content_down_2.addWidget(button_content_down_2_3)
 
         self.setLayout(self.mainwindow)
-
