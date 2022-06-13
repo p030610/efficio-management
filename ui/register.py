@@ -19,7 +19,7 @@ class Register(QWidget):
         
         self.setWindowTitle("에피치오 업무 관리 프로그램")
         self.move(100, 100)
-        self.setFixedSize(1280, 800)
+        self.setFixedSize(1000, 600)
 
         mainlayout = QVBoxLayout()
         upper_dock = QHBoxLayout()
@@ -31,16 +31,30 @@ class Register(QWidget):
         register_button_layout = QHBoxLayout()
         layout_id = QHBoxLayout()
 
+        frame_1 = QFrame()
+        frame_1.setFrameShape(QFrame.Shape.Panel)
+
+        frame_2 = QFrame()
+        frame_2.setFrameShape(QFrame.Shape.Panel)
+
+        frame_3 = QFrame()
+        frame_3.setFrameShape(QFrame.Shape.Panel)
+
+        frame_1.setLayout(content_left)
+        frame_2.setLayout(register_layout)
+        frame_3.setLayout(upper_dock)
+
         button_id = QPushButton("중복확인")
 
         button_id.clicked.connect(self.parent.inspect_id)
 
-        button_efficio = QLabel("에피치오")
+        button_efficio = QPushButton("efficio")
 
         label_info = QLabel("ID:담당자명")
         label_datetime = QLabel(datetime.datetime.today().strftime("%Y년 %m월 %d일")) 
 
         label_register = QLabel("-회원가입")
+        label_register.setFont(QFont('맑은 고딕', 20))
 
         self.line_name = QLineEdit()
         self.line_name.setPlaceholderText("이름")
@@ -65,6 +79,7 @@ class Register(QWidget):
 
         button_register = QPushButton("가입 완료")
         button_cancel = QPushButton("취소")
+        button_cancel.clicked.connect(self.parent.open_login)
 
         label_register2 = QLabel("-회원가입")
 
@@ -76,24 +91,23 @@ class Register(QWidget):
         upper_dock.addWidget(button_efficio)
 
         upper_dock.addLayout(dock_right)
+        upper_dock.setContentsMargins(30,0,300,0)
         button_efficio.resize(80,50)
         upper_dock.setStretchFactor(dock_right, -1)
 
-        content.addLayout(content_left)
+        content.addWidget(frame_1)
         content.addLayout(content_right)
 
-        content_left.addWidget(label_register)
+        content_left.addWidget(label_register,alignment=Qt.AlignmentFlag.AlignTop)
 
-        content_left.setContentsMargins(0,0,0,250)
 
         # content_left.
 
         content_right.addWidget(label_register2)
-        content_right.addLayout(register_layout)
+        content_right.addWidget(frame_2)
 
-        content_right.setContentsMargins(300,0,300,0)
+        content_right.setContentsMargins(100,100,200,150)
 
-        content.setContentsMargins(0,100,0,300)
 
         register_layout.addWidget(self.line_name)
         register_layout.addWidget(self.line_phone)
@@ -112,7 +126,7 @@ class Register(QWidget):
         register_button_layout.addWidget(button_register)
         register_button_layout.addWidget(button_cancel)
 
-        mainlayout.addLayout(upper_dock)
+        mainlayout.addWidget(frame_3)
         mainlayout.addLayout(content)
 
         self.setLayout(mainlayout)

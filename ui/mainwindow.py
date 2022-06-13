@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'mainwindow.ui'
-##
-## Created by: Qt User Interface Compiler version 6.3.0
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
@@ -38,6 +28,8 @@ class Mainwindow(QWidget):
         search_layout_1 = QHBoxLayout()
         search_layout_2 = QHBoxLayout()
         search_layout_3 = QHBoxLayout()
+        
+        self.layout_info = QHBoxLayout()
 
         label_company_list = QLabel("-기업 리스트")
         label_deadline_align = QLabel("-마감일 순")
@@ -51,6 +43,9 @@ class Mainwindow(QWidget):
         button_efficio.clicked.connect(self.parent.goto_home)
 
         self.label_info = QLabel("ID:담당자명")
+        self.label_notice = QPushButton("알림 없음")
+        self.label_notice.setStyleSheet("background-color: yellow")
+        self.label_notice.clicked.connect(self.parent.open_notice)
         self.label_datetime = QLabel(datetime.datetime.today().strftime("%Y년 %m월 %d일")) 
 
         button_new = QPushButton("신규")
@@ -59,8 +54,8 @@ class Mainwindow(QWidget):
         button_in_progress.clicked.connect(self.parent.in_progress_clicked)
         button_complete = QPushButton("완료")
         button_complete.clicked.connect(self.parent.complete_clicked)
-        button_current = QPushButton("현황")
-        button_current.clicked.connect(self.parent.current_clicked)
+        button_current = QPushButton("기업 리스트")
+        button_current.clicked.connect(self.parent.company_list_clicked)
         button_lecture = QPushButton("강의")
         button_lecture.clicked.connect(self.parent.lecture_clicked)
         button_settings = QPushButton("설정")
@@ -103,8 +98,10 @@ class Mainwindow(QWidget):
 
         search_layout_3.addWidget(self.line_search_3)
         search_layout_3.addWidget(button_search_3)
-
-        dock_right.addWidget(self.label_info)
+        
+        dock_right.addLayout(self.layout_info)
+        self.layout_info.addWidget(self.label_notice)
+        self.layout_info.addWidget(self.label_info)
         dock_right.addWidget(self.label_datetime)
         dock_right.setContentsMargins(100,0,0,0)
         self.mainwindow.addLayout(self.dock_top)

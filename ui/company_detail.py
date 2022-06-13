@@ -1,3 +1,5 @@
+# 5/27피드백
+# 서비스 내역이 페이지 3분의 2 차지, 상세정보는 왼쪽에 폭의 3분의 1 형태로 기입
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
@@ -30,6 +32,7 @@ class Company_detail(QWidget):
         label_table = QLabel("서비스 내역")
 
         self.table = QTableWidget()
+        
 
         
         button_efficio = QPushButton("에피치오 홈")
@@ -44,15 +47,17 @@ class Company_detail(QWidget):
         button_in_progress.clicked.connect(self.parent.in_progress_clicked)
         button_complete = QPushButton("완료")
         button_complete.clicked.connect(self.parent.complete_clicked)
-        button_current = QPushButton("현황")
-        button_current.clicked.connect(self.parent.current_clicked)
+        button_current = QPushButton("기업 리스트")
+        button_current.clicked.connect(self.parent.company_list_clicked)
         button_lecture = QPushButton("강의")
         button_lecture.clicked.connect(self.parent.lecture_clicked)
         button_settings = QPushButton("설정")
         button_settings.clicked.connect(self.parent.settings_clicked)
 
-        button_content_modify = QPushButton("수정")
+        # button_content_modify = QPushButton("수정")
+        # button_content_modify.clicked.connect()
         button_content_save = QPushButton("저장")
+        button_content_save.clicked.connect(self.parent.save_company_detail)
 
         label_content = QLabel("(기업명)상세정보")
 
@@ -82,7 +87,7 @@ class Company_detail(QWidget):
         self.line_edit_content_down_2_1 = QLineEdit()
         self.line_edit_content_down_2_2 = QLineEdit()
         self.line_edit_content_down_2_3 = QLineEdit()
-        self.line_edit_content_down_2_4 = QLineEdit()
+        self.line_edit_content_down_2_4 = QPlainTextEdit()
 
         button_content_down_2_1 = QPushButton("보기")
         button_content_down_2_2 = QPushButton("파일 업로드")
@@ -110,15 +115,18 @@ class Company_detail(QWidget):
         dock_button.addWidget(button_settings)
 
         self.content_up.addWidget(label_content)
-        self.content_up.addWidget(button_content_modify)
+        # self.content_up.addWidget(button_content_modify)
         self.content_up.addWidget(button_content_save)
-        self.content_up.setContentsMargins(0,0,500,0)
+        self.content_up.setContentsMargins(0,0,700,0)
 
         self.content.addLayout(self.content_up)#기업명 상세정보 수정 저장
         self.content.addLayout(self.content_down)
         self.content_down.addLayout(content_down_1)#좌측 column
+        
         self.content_down.addLayout(content_down_2)#우측 column
         self.content_down.addLayout(table_layout)
+
+        self.content_down.setContentsMargins(50,0,50,0)
 
         content_down_1.addWidget(label_content_down_1_1)
         content_down_1.addWidget(self.line_edit_content_down_1_1)#기업명
@@ -135,6 +143,8 @@ class Company_detail(QWidget):
         content_down_1_sublayout.addWidget(button_content_down_1_1)
         content_down_1.addWidget(button_content_down_1_2)
         content_down_1.addWidget(button_content_down_1_3)
+
+        content_down_1_sublayout.setContentsMargins(0,370,0,0)
 
         content_down_2.addWidget(label_content_down_2_1)#선금
         content_down_2.addWidget(self.line_edit_content_down_2_1)

@@ -1,3 +1,4 @@
+# 아이디저장 구현
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
@@ -16,13 +17,24 @@ class Loginpage(QWidget):
         self.move(100, 100)
         self.setFixedSize(640, 480)
 
+        frame_1 = QFrame()
+        frame_1.setFrameShape(QFrame.Shape.Panel)
+
+        p = frame_1.palette()
+        p.setColor(frame_1.backgroundRole(), QColor(160,160,160))
+        frame_1.setPalette(p)
+
         mainlayout = QVBoxLayout()
         upper_dock = QHBoxLayout()
         content = QVBoxLayout()
         button_layout = QHBoxLayout()
         dock_right = QVBoxLayout()
+        dock_left = QVBoxLayout()
 
-        button_efficio = QLabel("에피치오")
+        frame_1.setLayout(upper_dock)
+
+
+        button_efficio = QPushButton("efficio")
         # button_efficio.clicked.connect(self.parent.goto_home)
 
         button_login = QPushButton("로그인")
@@ -45,23 +57,25 @@ class Loginpage(QWidget):
 
         dock_right.addWidget(label_info)
         dock_right.addWidget(label_datetime)
-        mainlayout.addLayout(upper_dock)
+        mainlayout.addWidget(frame_1)
         mainlayout.addLayout(content)
         content.addWidget(self.input_id)
         content.addWidget(self.input_pw)
         content.addLayout(button_layout)
         content.setStretchFactor(button_layout,5)
         mainlayout.setStretchFactor(content, 5)
-        upper_dock.addWidget(button_efficio)
-
+        upper_dock.addLayout(dock_left)
         upper_dock.addLayout(dock_right)
+        dock_left.addWidget(button_efficio)
+        dock_left.setContentsMargins(0,0,200,0)
+        
+        dock_right.setContentsMargins(200,0,0,0)
         button_efficio.resize(80,50)
-        upper_dock.setStretchFactor(dock_right, -1)
         button_layout.addWidget(button_login)
         button_layout.addWidget(button_find_id)
         button_layout.addWidget(button_find_pw)
         button_layout.addWidget(button_register)
-        content.setContentsMargins(100,50,100,200)
+        content.setContentsMargins(100,110,100,200)
 
         button_login.clicked.connect(lambda : self.parent.login(self,self.input_id.text(),self.input_pw.text()))
 

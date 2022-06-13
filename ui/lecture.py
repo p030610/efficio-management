@@ -1,6 +1,7 @@
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
+
 import datetime
 
 class Lecture(QWidget):
@@ -15,27 +16,21 @@ class Lecture(QWidget):
         self.setFixedSize(1200,800)
         self.mainwindow = QVBoxLayout()
         self.dock_top = QHBoxLayout()
-        self.content = QHBoxLayout()
+        self.content = QVBoxLayout()
         dock_right = QVBoxLayout()
         dock_left = QVBoxLayout()
         dock_button = QHBoxLayout()
+        self.button_layout = QHBoxLayout()
 
-        table_layout_1 = QVBoxLayout()
-        table_layout_2 = QVBoxLayout()
-        table_layout_3 = QVBoxLayout()
-
-        label_company_list = QLabel("-기업 리스트")
-        label_deadline_align = QLabel("-마감일 순")
-        label_estimate_align = QLabel("-견적서 발행 순")
-
-        table_company_list = QTableWidget()
-        table_deadline_align = QTableWidget()
-        table_estimate_align = QTableWidget()
+        self.layout_info = QHBoxLayout()
 
         button_efficio = QPushButton("에피치오 홈")
         button_efficio.clicked.connect(self.parent.goto_home)
 
         self.label_info = QLabel("ID:담당자명")
+        self.label_notice = QPushButton("알림 없음")
+        self.label_notice.setStyleSheet("background-color: yellow")
+        self.label_notice.clicked.connect(self.parent.open_notice)
         self.label_datetime = QLabel(datetime.datetime.today().strftime("%Y년 %m월 %d일")) 
 
         button_new = QPushButton("신규")
@@ -44,14 +39,36 @@ class Lecture(QWidget):
         button_in_progress.clicked.connect(self.parent.in_progress_clicked)
         button_complete = QPushButton("완료")
         button_complete.clicked.connect(self.parent.complete_clicked)
-        button_current = QPushButton("현황")
-        button_current.clicked.connect(self.parent.current_clicked)
+        button_current = QPushButton("기업 리스트")
+        button_current.clicked.connect(self.parent.company_list_clicked)
         button_lecture = QPushButton("강의")
         button_lecture.clicked.connect(self.parent.lecture_clicked)
         button_settings = QPushButton("설정")
         button_settings.clicked.connect(self.parent.settings_clicked)
 
-        dock_right.addWidget(self.label_info)
+        self.line_search_1 = QLineEdit()
+        self.line_search_1.setPlaceholderText("검색")
+        button_search_1 = QPushButton("검색")
+        button_search_1.clicked.connect(self.parent.mainwindow_search_1)
+
+        self.line_search_2 = QLineEdit()
+        self.line_search_2.setPlaceholderText("검색")
+        button_search_2 = QPushButton("검색")
+        button_search_2.clicked.connect(self.parent.mainwindow_search_2)
+
+        self.line_search_3 = QLineEdit()
+        self.line_search_3.setPlaceholderText("검색")
+        button_search_3 = QPushButton("검색")
+        button_search_3.clicked.connect(self.parent.mainwindow_search_3)
+
+        button_add = QPushButton("추가")
+
+        cal = QCalendarWidget(self)
+        cal.setGridVisible(True)
+
+        dock_right.addLayout(self.layout_info)
+        self.layout_info.addWidget(self.label_notice)
+        self.layout_info.addWidget(self.label_info)
         dock_right.addWidget(self.label_datetime)
         dock_right.setContentsMargins(100,0,0,0)
         self.mainwindow.addLayout(self.dock_top)
@@ -68,16 +85,12 @@ class Lecture(QWidget):
         dock_button.addWidget(button_current)
         dock_button.addWidget(button_lecture)
         dock_button.addWidget(button_settings)
-        self.content.addLayout(table_layout_1)
-        self.content.addLayout(table_layout_2)
-        self.content.addLayout(table_layout_3)
+        self.content.addLayout(self.button_layout)
+        self.button_layout.setContentsMargins(800,0,0,0)
+        self.button_layout.addWidget(button_add)
 
-        table_layout_1.addWidget(label_company_list)
-        table_layout_1.addWidget(table_company_list)
-        table_layout_2.addWidget(label_deadline_align)
-        table_layout_2.addWidget(table_deadline_align)
-        table_layout_3.addWidget(label_estimate_align)
-        table_layout_3.addWidget(table_estimate_align)
+        self.content.addWidget(cal)
 
         self.setLayout(self.mainwindow)
+
 
