@@ -1,6 +1,6 @@
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 import datetime
 
@@ -40,11 +40,13 @@ class New_step1_2(QWidget):
         button_add_row.clicked.connect(self.parent.add_table_row_new_step_1_2)
 
         button_previous = QPushButton("이전")
+        button_previous.clicked.connect(self.parent.new_clicked)
         button_save = QPushButton("저장")
         button_save.clicked.connect(self.parent.save_table_new_step_1_2)
         button_next = QPushButton("다음")
         button_next.clicked.connect(self.parent.open_new_step_1_3)
         button_convert_pdf = QPushButton("pdf변환")
+        button_convert_pdf.clicked.connect(self.parent.convert_estimate_pdf)
 
         button_new = QPushButton("신규")
         button_new.clicked.connect(self.parent.new_clicked)

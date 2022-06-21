@@ -1,8 +1,8 @@
 # 5/27피드백
 # 서비스 내역이 페이지 3분의 2 차지, 상세정보는 왼쪽에 폭의 3분의 1 형태로 기입
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 import datetime
 
 class Company_detail(QWidget):
@@ -29,6 +29,8 @@ class Company_detail(QWidget):
         content_down_1_sublayout = QHBoxLayout()
         content_down_2_sublayout= QHBoxLayout()
 
+        self.layout_info = QHBoxLayout()
+
         label_table = QLabel("서비스 내역")
 
         self.table = QTableWidget()
@@ -39,6 +41,9 @@ class Company_detail(QWidget):
         button_efficio.clicked.connect(self.parent.goto_home)
 
         self.label_info = QLabel("ID:담당자명")
+        self.label_notice = QPushButton("알림 없음")
+        self.label_notice.setStyleSheet("background-color: yellow")
+        self.label_notice.clicked.connect(self.parent.open_notice)
         self.label_datetime = QLabel(datetime.datetime.today().strftime("%Y년 %m월 %d일")) 
 
         button_new = QPushButton("신규")
@@ -96,9 +101,12 @@ class Company_detail(QWidget):
         table_layout.addWidget(label_table)
         table_layout.addWidget(self.table)
 
-        dock_right.addWidget(self.label_info)
+        dock_right.addLayout(self.layout_info)
+        self.layout_info.addWidget(self.label_notice)
+        self.layout_info.addWidget(self.label_info)
         dock_right.addWidget(self.label_datetime)
         dock_right.setContentsMargins(100,0,0,0)
+        
         self.mainwindow.addLayout(self.dock_top)
         self.mainwindow.addLayout(self.content)
         self.mainwindow.setStretchFactor(self.content, 5)

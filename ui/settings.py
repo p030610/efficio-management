@@ -1,7 +1,7 @@
 #담당자 이름 가지고있는 기업 표에 출력
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 import datetime
 
 class Settings(QWidget):

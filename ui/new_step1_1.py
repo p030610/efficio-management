@@ -1,6 +1,6 @@
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 import datetime
 
@@ -67,13 +67,21 @@ class New_step1_1(QWidget):
         label_damdangja_phone = QLabel("담당자 연락처")
 
         self.input_consult_date = QLineEdit()
+        self.input_consult_date.setPlaceholderText("yyyy-mm-dd")
         self.input_dantok = QLineEdit()
+        self.input_dantok.setPlaceholderText("y/n")
         self.input_company_name = QLineEdit()
+        self.input_company_name.setPlaceholderText("이름 입력")
         self.input_business_num = QLineEdit()
+        self.input_business_num.setPlaceholderText("000-00-00000")
         self.input_represent = QLineEdit()
+        self.input_represent.setPlaceholderText("000")
         self.input_represent_phone = QLineEdit()
+        self.input_represent_phone.setPlaceholderText("000-0000-0000")
         self.input_damdangja = QLineEdit()
+        self.input_damdangja.setPlaceholderText("000")
         self.input_damdangja_phone = QLineEdit()
+        self.input_damdangja_phone.setPlaceholderText("000-0000-0000")
 
         button_save = QPushButton("저장")
         button_save.clicked.connect(self.parent.create_new_company)

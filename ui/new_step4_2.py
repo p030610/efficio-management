@@ -1,7 +1,8 @@
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 import datetime
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 class New_step4_2(QWidget):
     def __init__(self,parent) : 
@@ -21,6 +22,8 @@ class New_step4_2(QWidget):
         dock_left = QVBoxLayout()
         dock_button = QHBoxLayout()
 
+        self.layout_info = QHBoxLayout()
+
         table_layout_1 = QVBoxLayout()
         table_layout_2 = QVBoxLayout()
         table_layout_3 = QVBoxLayout()
@@ -37,7 +40,11 @@ class New_step4_2(QWidget):
         button_efficio.clicked.connect(self.parent.goto_home)
 
         self.label_info = QLabel("ID:담당자명")
+        self.label_notice = QPushButton("알림 없음")
+        self.label_notice.setStyleSheet("background-color: yellow")
+        self.label_notice.clicked.connect(self.parent.open_notice)
         self.label_datetime = QLabel(datetime.datetime.today().strftime("%Y년 %m월 %d일")) 
+        self.table_label = QLabel("-진행 중(서비스 마감 순)")
 
         button_new = QPushButton("신규")
         button_new.clicked.connect(self.parent.new_clicked)
@@ -52,7 +59,16 @@ class New_step4_2(QWidget):
         button_settings = QPushButton("설정")
         button_settings.clicked.connect(self.parent.settings_clicked)
 
-        dock_right.addWidget(self.label_info)
+        self.webView = QWebEngineView()
+        self.webView.settings().setAttribute(self.webView.settings().WebAttribute.PluginsEnabled, True)
+        self.webView.settings().setAttribute(self.webView.settings().WebAttribute.PdfViewerEnabled, True)
+
+        self.webView.setFixedHeight(700)
+
+
+        dock_right.addLayout(self.layout_info)
+        self.layout_info.addWidget(self.label_notice)
+        self.layout_info.addWidget(self.label_info)
         dock_right.addWidget(self.label_datetime)
         dock_right.setContentsMargins(100,0,0,0)
         self.mainwindow.addLayout(self.dock_top)

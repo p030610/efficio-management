@@ -1,6 +1,7 @@
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 import datetime
 
@@ -34,6 +35,12 @@ class New_step1_5(QWidget):
         self.table_estimate = QTableWidget()
 
         self.table_money = QTableWidget()
+
+        self.webView = QWebEngineView()
+        self.webView.settings().setAttribute(self.webView.settings().WebAttribute.PluginsEnabled, True)
+        self.webView.settings().setAttribute(self.webView.settings().WebAttribute.PdfViewerEnabled, True)
+
+        self.webView.setFixedHeight(700)
 
         self.table_money.setColumnCount(4)
         self.table_money.setRowCount(3)
@@ -88,11 +95,19 @@ class New_step1_5(QWidget):
         self.label_content_right_1_1 = QLabel("1. 거래처 시트를 작성 했나요?")
         self.label_content_right_1_2 = QLabel("2. 거래처 시트에 문제가 없는지, 더블 체크 했나요?")
 
-        button_content_right_1_1_o = QPushButton("O")
-        button_content_right_1_1_x = QPushButton("X")
+        self.button_content_right_1_1_o = QPushButton("O")
+        self.button_content_right_1_1_o.clicked.connect(self.parent.new_step_1_5_1_o_clicked)
+        self.button_content_right_1_1_o.setStyleSheet('QPushButton {background-color: yellow;}')
+        self.button_content_right_1_1_x = QPushButton("X")
+        self.button_content_right_1_1_x.clicked.connect(self.parent.new_step_1_5_1_x_clicked)
+        self.button_content_right_1_1_x.setStyleSheet('QPushButton {background-color: yellow;}')
 
-        button_content_right_1_2_o = QPushButton("O")
-        button_content_right_1_2_x = QPushButton("X")
+        self.button_content_right_1_2_o = QPushButton("O")
+        self.button_content_right_1_2_o.clicked.connect(self.parent.new_step_1_5_2_o_clicked)
+        self.button_content_right_1_2_o.setStyleSheet('QPushButton {background-color: yellow;}')
+        self.button_content_right_1_2_x = QPushButton("X")
+        self.button_content_right_1_2_x.clicked.connect(self.parent.new_step_1_5_2_x_clicked)
+        self.button_content_right_1_2_x.setStyleSheet('QPushButton {background-color: yellow;}')
 
         button_previous = QPushButton("이전")
         button_previous.clicked.connect(self.parent.open_new_step_1_4)
@@ -127,6 +142,8 @@ class New_step1_5(QWidget):
         self.content.addLayout(content_xlsx)
         self.content.addLayout(content_right)
 
+        content_right.setContentsMargins(0,150,0,150)
+
         content_right.addLayout(layout_content_right_1_1)
         content_right.addLayout(layout_content_right_1_2)
 
@@ -140,17 +157,17 @@ class New_step1_5(QWidget):
         layout_content_right_button.addWidget(button_next)
 
         layout_content_right_1_1.addWidget(self.label_content_right_1_1)
-        layout_content_right_1_1.addWidget(button_content_right_1_1_o)
-        layout_content_right_1_1.addWidget(button_content_right_1_1_x)
+        layout_content_right_1_1.addWidget(self.button_content_right_1_1_o)
+        layout_content_right_1_1.addWidget(self.button_content_right_1_1_x)
 
         layout_content_right_1_2.addWidget(self.label_content_right_1_2)
-        layout_content_right_1_2.addWidget(button_content_right_1_2_o)
-        layout_content_right_1_2.addWidget(button_content_right_1_2_x)
+        layout_content_right_1_2.addWidget(self.button_content_right_1_2_o)
+        layout_content_right_1_2.addWidget(self.button_content_right_1_2_x)
 
         layout_content_right_1_2.addWidget(self.label_content_right_1_2)
 
         # layout_content_right_2_1.addWidget(self.table_money)
 
-        content_xlsx.addWidget(self.table_estimate)
+        content_xlsx.addWidget(self.webView)
 
         self.setLayout(self.mainwindow)

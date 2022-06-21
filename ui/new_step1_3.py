@@ -1,6 +1,8 @@
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+
 
 import datetime
 
@@ -32,7 +34,11 @@ class New_step1_3(QWidget):
 
         self.layout_info = QHBoxLayout()
 
-        self.table_estimate = QTableWidget()
+        self.webView = QWebEngineView()
+        self.webView.settings().setAttribute(self.webView.settings().WebAttribute.PluginsEnabled, True)
+        self.webView.settings().setAttribute(self.webView.settings().WebAttribute.PdfViewerEnabled, True)
+
+        self.webView.setFixedHeight(700)
 
         button_efficio = QPushButton("에피치오 홈")
         button_efficio.clicked.connect(self.parent.goto_home)
@@ -65,18 +71,33 @@ class New_step1_3(QWidget):
         self.label_content_right_2_1 = QLabel("3. [기업명] 세금계산서 여부")
         self.label_content_right_2_2 = QLabel("4. [기업명] 세금계산서 발행 날짜")
 
-        button_content_right_1_1_o = QPushButton("O")
-        button_content_right_1_1_x = QPushButton("X")
+        self.button_content_right_1_1_o = QPushButton("O")
+        self.button_content_right_1_1_o.setStyleSheet('QPushButton {background-color: yellow;}')
+        self.button_content_right_1_1_o.clicked.connect(self.parent.new_step_1_3_1_o_clicked)
+        self.button_content_right_1_1_x = QPushButton("X")
+        self.button_content_right_1_1_x.setStyleSheet('QPushButton {background-color: yellow;}')
+        self.button_content_right_1_1_x.clicked.connect(self.parent.new_step_1_3_1_x_clicked)
 
-        button_content_right_1_2_o = QPushButton("O")
-        button_content_right_1_2_x = QPushButton("X")
+        self.button_content_right_1_2_o = QPushButton("O")
+        self.button_content_right_1_2_o.setStyleSheet('QPushButton {background-color: yellow;}')
+        self.button_content_right_1_2_o.clicked.connect(self.parent.new_step_1_3_2_o_clicked)
+        self.button_content_right_1_2_x = QPushButton("X")
+        self.button_content_right_1_2_x.setStyleSheet('QPushButton {background-color: yellow;}')
+        self.button_content_right_1_2_x.clicked.connect(self.parent.new_step_1_3_2_x_clicked)
 
-        button_content_right_2_1_o = QPushButton("O")
-        button_content_right_2_1_x = QPushButton("X")
+        self.button_content_right_2_1_o = QPushButton("O")
+        self.button_content_right_2_1_o.setStyleSheet('QPushButton {background-color: yellow;}')
+        self.button_content_right_2_1_o.clicked.connect(self.parent.new_step_1_3_3_o_clicked)
+        self.button_content_right_2_1_x = QPushButton("X")
+        self.button_content_right_2_1_x.setStyleSheet('QPushButton {background-color: yellow;}')
+        self.button_content_right_2_1_x.clicked.connect(self.parent.new_step_1_3_3_x_clicked)
 
-        button_content_right_2_2_calendar = QPushButton("달력")
+        self.button_content_right_2_2_calendar = QPushButton("입력한 날짜 저장")
+        self.button_content_right_2_2_calendar.setStyleSheet('QPushButton {background-color: yellow;}')
+        self.button_content_right_1_1_o.clicked.connect(self.parent.new_step_1_3_4_calendar_clicked)
 
-        self.label_content_right_2_2_calendar = QLabel("(YY.MM.DD)")
+        self.label_content_right_2_2_calendar = QLineEdit()
+        self.label_content_right_2_2_calendar.setPlaceholderText("yyyy-mm-dd")
 
         button_previous = QPushButton("이전")
         button_previous.clicked.connect(self.parent.open_new_step_1_2)
@@ -108,6 +129,8 @@ class New_step1_3(QWidget):
         self.content.addLayout(content_xlsx)
         self.content.addLayout(content_right)
 
+        content_right.setContentsMargins(0,150,0,150)
+
         content_right.addWidget(label_content_right_1)
         content_right.addLayout(layout_content_right_1_1)
         content_right.addLayout(layout_content_right_1_2)
@@ -121,21 +144,21 @@ class New_step1_3(QWidget):
         layout_content_right_button.addWidget(button_next)
 
         layout_content_right_1_1.addWidget(self.label_content_right_1_1)
-        layout_content_right_1_1.addWidget(button_content_right_1_1_o)
-        layout_content_right_1_1.addWidget(button_content_right_1_1_x)
+        layout_content_right_1_1.addWidget(self.button_content_right_1_1_o)
+        layout_content_right_1_1.addWidget(self.button_content_right_1_1_x)
 
         layout_content_right_1_2.addWidget(self.label_content_right_1_2)
-        layout_content_right_1_2.addWidget(button_content_right_1_2_o)
-        layout_content_right_1_2.addWidget(button_content_right_1_2_x)
+        layout_content_right_1_2.addWidget(self.button_content_right_1_2_o)
+        layout_content_right_1_2.addWidget(self.button_content_right_1_2_x)
 
         layout_content_right_2_1.addWidget(self.label_content_right_2_1)
-        layout_content_right_2_1.addWidget(button_content_right_2_1_o)
-        layout_content_right_2_1.addWidget(button_content_right_2_1_x)
+        layout_content_right_2_1.addWidget(self.button_content_right_2_1_o)
+        layout_content_right_2_1.addWidget(self.button_content_right_2_1_x)
 
         layout_content_right_2_2.addWidget(self.label_content_right_2_2)
-        layout_content_right_2_2.addWidget(button_content_right_2_2_calendar)
+        layout_content_right_2_2.addWidget(self.button_content_right_2_2_calendar)
         layout_content_right_2_2.addWidget(self.label_content_right_2_2_calendar)
 
-        content_xlsx.addWidget(self.table_estimate)
+        content_xlsx.addWidget(self.webView)
 
         self.setLayout(self.mainwindow)

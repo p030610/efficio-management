@@ -1,7 +1,7 @@
 #버튼 앞에 -표시 삭제 세분류 폰트 크기조정
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 import datetime
 
 class In_progress(QWidget):
@@ -27,6 +27,8 @@ class In_progress(QWidget):
         content_right_top = QHBoxLayout()
         search_layout_1 = QHBoxLayout()
 
+        self.layout_info = QHBoxLayout()
+
         self.line_search_1 = QLineEdit()
         self.line_search_1.setPlaceholderText("검색")
         button_search_1 = QPushButton("검색")
@@ -36,20 +38,25 @@ class In_progress(QWidget):
         button_efficio.clicked.connect(self.parent.goto_home)
 
         self.label_info = QLabel("ID:담당자명")
+        self.label_notice = QPushButton("알림 없음")
+        self.label_notice.setStyleSheet("background-color: yellow")
+        self.label_notice.clicked.connect(self.parent.open_notice)
         self.label_datetime = QLabel(datetime.datetime.today().strftime("%Y년 %m월 %d일")) 
         self.table_label = QLabel("-진행 중(서비스 마감 순)")
 
         self.table = QTableWidget()
-        self.table.setColumnCount(7)
-        self.table.setHorizontalHeaderLabels(["기업명", "서비스명", "남은 건수", "진행 건수", "마감 날짜", "남은 기한", "비고"])
+        self.table.setColumnCount(8)
+        self.table.setHorizontalHeaderLabels(["기업명", "서비스명", "남은 건수", "진행 건수", "마감 날짜", "남은 기한", "비고", "고유번호"])
+        self.table.clicked.connect(self.parent.in_progress_1_table_clicked)
 
-        self.table.setColumnWidth(0, int(self.table.width()/7))
-        self.table.setColumnWidth(1, int(self.table.width()/7))
-        self.table.setColumnWidth(2, int(self.table.width()/7))
-        self.table.setColumnWidth(3, int(self.table.width()/7))
-        self.table.setColumnWidth(4, int(self.table.width()/7))
-        self.table.setColumnWidth(5, int(self.table.width()/7))
-        self.table.setColumnWidth(6, int(self.table.width()/7))
+        self.table.setColumnWidth(0, int(self.table.width()/8))
+        self.table.setColumnWidth(1, int(self.table.width()/8))
+        self.table.setColumnWidth(2, int(self.table.width()/8))
+        self.table.setColumnWidth(3, int(self.table.width()/8))
+        self.table.setColumnWidth(4, int(self.table.width()/8))
+        self.table.setColumnWidth(5, int(self.table.width()/8))
+        self.table.setColumnWidth(6, int(self.table.width()/8))
+        self.table.setColumnWidth(7, int(self.table.width()/8))
 
         button_new = QPushButton("-신규")
         button_new.clicked.connect(self.parent.new_clicked)
@@ -122,9 +129,12 @@ class In_progress(QWidget):
         self.content_left.addWidget(button_lecture, 4)
         self.content_left.addWidget(button_settings, 5)
 
-        dock_right.addWidget(self.label_info)
+        dock_right.addLayout(self.layout_info)
+        self.layout_info.addWidget(self.label_notice)
+        self.layout_info.addWidget(self.label_info)
         dock_right.addWidget(self.label_datetime)
         dock_right.setContentsMargins(100,0,0,0)
+
         self.mainwindow.addWidget(frame_2)
         self.mainwindow.addLayout(self.content)
         self.mainwindow.setStretchFactor(self.content, 5)

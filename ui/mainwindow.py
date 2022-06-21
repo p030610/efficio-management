@@ -1,6 +1,6 @@
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 import datetime
 
@@ -86,9 +86,9 @@ class Mainwindow(QWidget):
 
         self.table_estimate_align.setColumnCount(6)
 
-        self.table_company_list.setHorizontalHeaderLabels(["기업명","대표자명","연락처","잔금","비고"])
-        self.table_deadline_align.setHorizontalHeaderLabels(["마감일","기업명","서비스명","남은수량","전체수량"])
-        self.table_estimate_align.setHorizontalHeaderLabels(["마감일","기업명","대표자명","남은수량","전체수량"])
+        self.table_company_list.setHorizontalHeaderLabels(["기업명","대표자명","연락처","잔금","비고", "고유번호"])
+        self.table_deadline_align.setHorizontalHeaderLabels(["마감일","기업명","서비스명","남은수량","전체수량", "고유번호"])
+        self.table_estimate_align.setHorizontalHeaderLabels(["마감일","기업명","대표자명","남은수량","전체수량", "고유번호"])
 
         search_layout_1.addWidget(self.line_search_1)
         search_layout_1.addWidget(button_search_1)

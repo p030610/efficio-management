@@ -1,6 +1,7 @@
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 import datetime
 
@@ -52,10 +53,16 @@ class New_step2_1(QWidget):
         button_settings = QPushButton("설정")
         button_settings.clicked.connect(self.parent.settings_clicked)
 
+        self.webView = QWebEngineView()
+        self.webView.settings().setAttribute(self.webView.settings().WebAttribute.PluginsEnabled, True)
+        self.webView.settings().setAttribute(self.webView.settings().WebAttribute.PdfViewerEnabled, True)
+
+        self.webView.setFixedHeight(700)
+
         self.button_previous = QPushButton("이전")
         self.button_previous.clicked.connect(self.parent.open_new_step_1_5)
         self.button_save = QPushButton("저장")
-        self.button_save.clicked.connect(self.parent.save_new_step_2_1)
+        self.button_save.clicked.connect(self.parent.save_new_service)
         self.button_next = QPushButton("다음")
         self.button_next.clicked.connect(self.parent.open_new_step_2_2)
 
@@ -78,10 +85,14 @@ class New_step2_1(QWidget):
         dock_button.addWidget(button_current)
         dock_button.addWidget(button_lecture)
         dock_button.addWidget(button_settings)
+        
 
         self.content.addLayout(content_xlsx)
         self.content.addLayout(self.content_right)
+        self.content_right.setContentsMargins(0,150,0,150)
 
-        content_xlsx.addWidget(self.table_estimate)
+        self.content.setStretchFactor(content_xlsx, 5)
+
+        content_xlsx.addWidget(self.webView)
 
         self.setLayout(self.mainwindow)
